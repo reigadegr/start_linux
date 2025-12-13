@@ -7,4 +7,4 @@
 - [Linux桌面](./linux_desktop/init.md)
     - [Fedora开荒](./linux_desktop/fedora_init.md)
     - [AnduinOS](./linux_desktop/anduinos_init.md)
-    
+    - [内核编译(Ubuntu通用)](./linux_desktop/kernel_compile.md)
