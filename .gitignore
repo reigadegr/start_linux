@@ -1,0 +1,4 @@
+book
+**/*.bak
+**/tmp
+**/*.zip
