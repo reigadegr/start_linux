@@ -89,3 +89,43 @@ bindeb-pkg 2>&1 | tee build_log.txt
 
 ccache -s
 ```
+
+## 有关clang开启LTO说明
+
+- 需要在ubuntu_defconfig追加以下内容:
+
+```txt
+CONFIG_OBJTOOL_WERROR=n
+CONFIG_LTO_NONE=n
+CONFIG_LTO_CLANG_FULL=n
+CONFIG_LTO_CLANG_THIN=y
+```
+
+注意，尽可能不要开full模式进行全量lto，一个是显著增加编译时间 还有就是可能导致无法开机。当然你在有备份的情况下可以尝试。objtool会把警告识别为错误，需要禁用
+
+尽可能按照以下补丁的逻辑去修改你的源码，禁用奇怪的设置
+
+```diff
+diff --git a/Makefile b/Makefile
+index 827a513e4407bc..bd6569f7764542 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1026,8 +1026,7 @@ KBUILD_LDFLAGS += -mllvm -import-instr-limit=5
+ endif
+
+ ifdef CONFIG_LTO
+-KBUILD_CFLAGS  += -fno-lto $(CC_FLAGS_LTO)
+-KBUILD_AFLAGS  += -fno-lto
++KBUILD_CFLAGS  += $(CC_FLAGS_LTO)
+ export CC_FLAGS_LTO
+ endif
+```
+
+### 如果你的是英伟达显卡
+- 需要把dkms编译英伟达内核模块的链接器从bfd换成lld
+文件位置: 
+
+```txt
+/usr/src/nvidia-580.95.05/dkms.conf
+```
+第三级目录的版本号灵活变通一下，不要照抄我的。可以使用vscode打开文件，Ctrl+F搜索bfd 改成lld即可，然后安装三个deb包。注意，不要安装带有dbg字符串的包，除非你知道自己在干什么。先安装linux-headers-开头的deb，其他的两个linux-image-开头的和linux-libc开头的deb包安装顺序无所谓。
