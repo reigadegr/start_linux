@@ -129,3 +129,17 @@ index 827a513e4407bc..bd6569f7764542 100644
 /usr/src/nvidia-580.95.05/dkms.conf
 ```
 第三级目录的版本号灵活变通一下，不要照抄我的。可以使用vscode打开文件，Ctrl+F搜索bfd 改成lld即可，然后安装三个deb包。注意，不要安装带有dbg字符串的包，除非你知道自己在干什么。先安装linux-headers-开头的deb，其他的两个linux-image-开头的和linux-libc开头的deb包安装顺序无所谓。
+
+## 推荐一些仓库
+
+第一个是我自己的:
+https://github.com/reigadegr/linux
+
+cachyOS的:
+https://github.com/CachyOS/linux-cachyos
+
+cachyOS补丁仓库:
+https://github.com/CachyOS/kernel-patches
+
+安卓玩机圈内核作者 破星sm8750仓库(6.6版本):
+https://github.com/TheGeniusClub/android_kernel_common_oneplus_sm8750
