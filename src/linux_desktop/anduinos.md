@@ -164,8 +164,8 @@ init_thp() {
     lock_val "511" /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_shared
     lock_val "65536" /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
 
-    # sleep 30s
-    lock_val "100" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
+    sleep 30s
+    lock_val "-1" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
     # while [ "$(cat /sys/kernel/mm/transparent_hugepage/khugepaged/full_scans)" -lt "3" ]; do
     #     sleep 1s
     # done
@@ -221,8 +221,8 @@ init_mem() {
 
 init_zram
 init_blk
-init_thp
 init_network
 init_mem
+init_thp
 
 ```
