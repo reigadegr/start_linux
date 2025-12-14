@@ -10,3 +10,4 @@
     - [内核编译(Ubuntu通用)](./linux_desktop/kernel_compile.md)
 - [Linux下玩大模型](./model/init.md)
     - [合并safetensors](./model/covert.md)
+    - [量化模型](./model/quantification.md)

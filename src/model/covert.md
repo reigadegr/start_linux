@@ -36,6 +36,7 @@ url = "https://download.pytorch.org/whl/cu130"
 ## 开始转化
 
 ```bash
-uv run convert_hf_to_gguf.py "$HOME/桌面/project/download_model_scope/ZhipuAI/AutoGLM-Phone-9B" --outtype f16 --outfile "$HOME/桌面/project/download_model_scope/ZhipuAI/zp.bin"
+uv run convert_hf_to_gguf.py "$HOME/桌面/project/download_model_scope/ZhipuAI/AutoGLM-Phone-9B" --outtype f16 --outfile "$HOME/桌面/project/download_model_scope/ZhipuAI/zp.gguf"
 ```
-这会把"$HOME/桌面/project/download_model_scope/ZhipuAI/AutoGLM-Phone-9B" 目录下全部*safetensors合并为一份zp.bin
+这会把"$HOME/桌面/project/download_model_scope/ZhipuAI/AutoGLM-Phone-9B" 目录下全部*safetensors合并为一份zp.gguf
+这个命令是将智谱AI的AutoGLM-Phone-9B模型从Hugging Face格式转换为GGUF格式，并指定输出精度为f16，输出文件名为zp.gguf。
