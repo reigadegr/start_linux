@@ -6,6 +6,16 @@
 
 - 搜索 优化，可以改一些样式，如光标指针
 
+## 初始工作
+```bash
+sudo apt update; sudo apt upgrade -y
+```
+
+## 安装控制联想性能模式切换的包
+```bash
+sudo apt install -y power-profiles-daemon
+```
+
 ## 有英伟达显卡的进行一些优化
 - 安装闭源驱动
 
