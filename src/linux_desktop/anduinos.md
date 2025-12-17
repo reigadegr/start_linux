@@ -155,7 +155,7 @@ init_blk() {
 
 init_thp() {
     lock_val "madvise" /sys/kernel/mm/transparent_hugepage/enabled
-    lock_val "always" /sys/kernel/mm/transparent_hugepage/defrag
+    lock_val "defrag+madvise" /sys/kernel/mm/transparent_hugepage/defrag
     lock_val "within_size" /sys/kernel/mm/transparent_hugepage/shmem_enabled
     for size in 16 32 64 128 256 512 1024 2048; do
         lock_val "inherit" /sys/kernel/mm/transparent_hugepage/hugepages-"$size"kB/enabled
