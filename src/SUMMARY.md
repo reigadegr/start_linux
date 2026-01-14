@@ -8,6 +8,7 @@
     - [Fedora开荒](./linux_desktop/fedora_init.md)
     - [AnduinOS](./linux_desktop/anduinos.md)
     - [内核编译(Ubuntu通用)](./linux_desktop/kernel_compile.md)
+    - [安装GreatSQL](./linux_desktop/great_sql.md)
     - [Linux桌面端小bug修复](./linux_desktop/bugfix.md)
 - [Linux下玩大模型](./model/init.md)
     - [合并safetensors](./model/covert.md)
