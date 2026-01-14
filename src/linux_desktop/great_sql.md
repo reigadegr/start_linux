@@ -55,7 +55,7 @@ Description=GreatSQL Server
 After=network.target
 
 [Service]
-User=root
+User=reigadegr
 ExecStart=/opt/greatsql/bin/mysqld_safe --defaults-file=/etc/my.cnf
 Restart=always
 
