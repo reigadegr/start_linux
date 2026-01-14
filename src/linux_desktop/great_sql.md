@@ -63,7 +63,5 @@ Restart=always
 WantedBy=multi-user.target
 " | sudo tee /etc/systemd/system/greatsql.service
 
-systemctl daemon-reload
-systemctl enable --now greatsql
-
-
+sudo systemctl daemon-reload
+sudo systemctl enable greatsql --now
