@@ -10,6 +10,7 @@ wget "https://product.greatdb.com/GreatSQL-8.4.4-4/GreatSQL-8.4.4-4-Linux-glibc2
  
 tar xf GreatSQL-8.4.4-4-Linux-glibc2.28-x86_64-minimal.tar.xz
 
+# 2. 让路径可读性提升
 sudo rm -rf ./greatsql/
 sudo mv ./GreatSQL-8.4.4-4-Linux-glibc2.28-x86_64-minimal/ ./greatsql/
 
@@ -20,8 +21,16 @@ sudo apt update; sudo apt install -y numactl openssl libjemalloc2 libaio-dev
 sudo rm -rf ~/.greatsql
 mkdir -p ~/.greatsql/{data,log,tmp}
 
-# 5. 创建极简配置（5行搞定）
-echo -e "[mysqld]\nbasedir=/opt/greatsql\ndatadir=/home/reigadegr/.greatsql/data\nsocket=/tmp/mysql.sock\nport=3306\n\n[client]\nsocket=/tmp/mysql.sock\nport=3306" | sudo tee /etc/my.cnf
+# 5. 创建极简配置
+echo "[mysqld]
+basedir=/opt/greatsql
+datadir=/home/reigadegr/.greatsql/data
+socket=/tmp/mysql.sock
+port=3306
+
+[client]
+socket=/tmp/mysql.sock
+port=3306" | sudo tee /etc/my.cnf
 
 
 # 6. 初始化数据库（无密码）
@@ -43,7 +52,7 @@ source ~/.bashrc
 # 10. 登录测试（无密码）
 mysql -u root
 
-## 11. 改密码
+## 11. 改密码为1234
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY '1234';
 
@@ -65,3 +74,6 @@ WantedBy=multi-user.target
 
 sudo systemctl daemon-reload
 sudo systemctl enable greatsql --now
+
+
+## 扩展ssl
