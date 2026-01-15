@@ -47,10 +47,14 @@ psql -U $(whoami) -d postgres
 vim ~/.ivory-5/data/pg_hba.conf
 
 这3行找到，trust都改成scram-sha-256
+```txt
 local   all             all                                     trust
 host    all             all             127.0.0.1/32            trust
 host    all             all             ::1/128                 trust
+```
 
-重启: 
+重启数据库:
 
+```sh
 pg_ctl -D ~/.ivory-5/data restart
+```
