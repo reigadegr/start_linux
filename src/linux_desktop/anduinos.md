@@ -58,6 +58,10 @@ After=graphical-session.target
 Type=simple
 # 直接以root身份运行，无需sudo
 ExecStart=/opt/pandora/pandora_opt.sh
+# 即使主脚本退出了，也不要杀死子进程
+RemainAfterExit=yes
+# 确保退出时不清理 cgroup 里的其他进程
+KillMode=none.sh
 # WorkingDirectory=/path/to/working/directory  # 可选
 # Restart=on-failure
 # RestartSec=5
@@ -153,6 +157,17 @@ init_blk() {
     done
 }
 
+init_khpd_scan() {
+    lock_val "100" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
+
+    sleep 12s
+    lock_val "0" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
+    while [ "$(cat /sys/kernel/mm/transparent_hugepage/khugepaged/full_scans)" -lt "6" ]; do
+        sleep 1s
+    done
+    lock_val "6000" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
+}
+
 init_thp() {
     lock_val "madvise" /sys/kernel/mm/transparent_hugepage/enabled
     lock_val "defer+madvise" /sys/kernel/mm/transparent_hugepage/defrag
@@ -167,32 +182,30 @@ init_thp() {
     #     done
     # fi
     lock_val "1" /sys/kernel/mm/transparent_hugepage/use_zero_page
-    lock_val "-1" /sys/kernel/mm/transparent_hugepage/khugepaged/alloc_sleep_millisecs
-    lock_val "0" /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
+    lock_val "100" /sys/kernel/mm/transparent_hugepage/khugepaged/alloc_sleep_millisecs
+    lock_val "1" /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
     lock_val "8" /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_none
     lock_val "64" /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_swap
     lock_val "511" /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_shared
     lock_val "65536" /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan
 
-    sleep 30s
-    lock_val "-1" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
-    # while [ "$(cat /sys/kernel/mm/transparent_hugepage/khugepaged/full_scans)" -lt "3" ]; do
-    #     sleep 1s
-    # done
-    # lock_val "6000" /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs
+    init_khpd_scan &
 }
 
 init_network() {
-    lock_val "1" /proc/sys/net/ipv4/tcp_shrink_window
-    lock_val "10" /proc/sys/net/ipv4/tcp_reordering
-    lock_val "1000" /proc/sys/net/ipv4/tcp_max_reordering
-    lock_val "1" /proc/sys/net/ipv4/tcp_thin_linear_timeouts
-    lock_val "1048576" /proc/sys/net/core/rmem_default
-    lock_val "16777216" /proc/sys/net/core/rmem_max
-    lock_val "65536 1048576 16777216" /proc/sys/net/ipv4/tcp_rmem
-    lock_val "1048576" /proc/sys/net/core/wmem_default
-    lock_val "16777216" /proc/sys/net/core/wmem_max
-    lock_val "65536 1048576 16777216" /proc/sys/net/ipv4/tcp_wmem
+    mask_val "0" /proc/sys/net/ipv4/tcp_autocorking
+    mask_val "1" /proc/sys/net/ipv4/tcp_tw_reuse
+    mask_val "5" /proc/sys/net/ipv4/tcp_fin_timeout
+    mask_val "1" /proc/sys/net/ipv4/tcp_shrink_window
+    mask_val "10" /proc/sys/net/ipv4/tcp_reordering
+    mask_val "1000" /proc/sys/net/ipv4/tcp_max_reordering
+    mask_val "1" /proc/sys/net/ipv4/tcp_thin_linear_timeouts
+    mask_val "1048576" /proc/sys/net/ipv4/rmem_default
+    mask_val "16777216" /proc/sys/net/ipv4/rmem_max
+    mask_val "65536 1048576 16777216" /proc/sys/net/ipv4/tcp_rmem
+    mask_val "1048576" /proc/sys/net/ipv4/wmem_default
+    mask_val "16777216" /proc/sys/net/ipv4/wmem_max
+    mask_val "65536 1048576 16777216" /proc/sys/net/ipv4/tcp_wmem
 }
 
 init_zram_per() {
