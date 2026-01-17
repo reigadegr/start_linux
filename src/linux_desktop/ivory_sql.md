@@ -58,3 +58,27 @@ host    all             all             ::1/128                 trust
 ```sh
 pg_ctl -D ~/.ivory-5/data restart
 ```
+
+### 注册到systemd
+- 注意修改用户名
+- 
+```sh
+echo "[Unit]
+Description=IvorySQL Server
+After=network.target
+
+[Service]
+User=reigadegr
+Type=forking
+ExecStart=/usr/ivory-5/bin/pg_ctl -D /home/reigadegr/.ivory-5/data -l /home/reigadegr/.ivory-5/data/lvory_logfile.txt start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ivorysql.service 
+```
+
+- 直接启动服务并检查
+
+```sh
+sudo systemctl enable ivorysql --now; sudo systemctl status ivorysql
+```
