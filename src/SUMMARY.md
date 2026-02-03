@@ -11,6 +11,7 @@
     - [安装GreatSQL](./linux_desktop/great_sql.md)
     - [安装IvorySQL](./linux_desktop/ivory_sql.md)
     - [Linux桌面端小bug修复](./linux_desktop/bugfix.md)
+    - [flatpak安装proton](./linux_desktop/proton_install.md)
 - [Linux下玩大模型](./model/init.md)
     - [合并safetensors](./model/covert.md)
     - [量化模型](./model/quantification.md)
