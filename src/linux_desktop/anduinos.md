@@ -20,7 +20,7 @@ sudo apt install -y power-profiles-daemon
 - 安装闭源驱动
 
 ```bash
-sudo apt install nvidia-drivers-580 nvidia-dkms-580 -y
+sudo apt install nvidia-driver-595 nvidia-dkms-595 -y
 ```
 > 如果有更新的版本号，也可以安装
 
@@ -37,7 +37,11 @@ systemctl enable nvidia-suspend.service
 systemctl enable nvidia-hibernate.service
 systemctl enable nvidia-resume.service
 
-sudo dracut --force
+# 然后看你系统类型吧，这里把非Debian页摆上
+
+ls -la /boot/initramfs-* 2>/dev/null && echo "dracut (RedHat/Arch系)" && sudo dracut --force
+
+ls -la /boot/initrd.img-* 2>/dev/null && echo "initramfs-tools (Debian系)" && sudo update-initramfs -u
 ```
 
 ## 设置开机自启动脚本
