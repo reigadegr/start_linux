@@ -7,11 +7,11 @@ sudo apt -y install pkg-config libreadline-dev libicu-dev libldap2-dev uuid-dev 
 
 ### 下载
 ```sh
-wget https://github.com/IvorySQL/IvorySQL/releases/download/IvorySQL_5.3/IvorySQL-5.3-4dfba1d-20260312.amd64.deb
+wget https://github.com/IvorySQL/IvorySQL/releases/download/IvorySQL_5.4/IvorySQL-5.4-a45b045-20260615.amd64.deb
  ```
  - 也可以使用国内镜像
 ```sh
-wget https://ghfast.top/https://github.com/IvorySQL/IvorySQL/releases/download/IvorySQL_5.3/IvorySQL-5.3-4dfba1d-20260312.amd64.deb
+wget https://ghfast.top/https://github.com/IvorySQL/IvorySQL/releases/download/IvorySQL_5.4/IvorySQL-5.4-a45b045-20260615.amd64.deb
  ```
 ### 安装
 ```sh
